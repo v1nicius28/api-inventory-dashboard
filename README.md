@@ -18,7 +18,7 @@ Spring Validation
 
 JUnit + Mockito (testes)
 
-Dockerfile presente
+Docker
 
 Render para hospedagem da API
 
