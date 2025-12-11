@@ -29,7 +29,7 @@ Render para hospedagem da API
 Backend: hospedado no Render
 
 MongoDB: MongoDB Atlas
-A API é consumida pelo frontend hospedado na Vercel → https://front-inventory-dashboard.vercel.app/.
+A API é consumida pelo frontend hospedado na Vercel → https://front-inventory-dashboard.vercel.app
 
 ⚙️ Funcionalidades da API
 🔐 Autenticação
