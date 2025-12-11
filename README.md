@@ -18,6 +18,8 @@ Spring Validation
 
 JUnit + Mockito (testes)
 
+Lombok
+
 Docker
 
 Render para hospedagem da API
@@ -48,8 +50,6 @@ Criar produto
 
 Listar todos
 
-Buscar por ID
-
 Atualizar
 
 Excluir
@@ -66,9 +66,7 @@ DTOs separados para requests/responses
 
 O projeto contém testes automatizados:
 
-AuthControllerTest
-
-ProductControllerTest
+Controller tests
 
 Integration tests
 
