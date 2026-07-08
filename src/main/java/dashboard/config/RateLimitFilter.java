@@ -30,7 +30,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         boolean isAuthRoute = request.getRequestURI().startsWith("/auth/");
 
         if (isWriteToProducts || isAuthRoute) {
-            String ip = request.getRemoteAddr();
+            String ip = getClientIp(request);
             Bucket bucket = buckets.computeIfAbsent(ip, k -> createNewBucket());
 
             if (!bucket.tryConsume(1)) {
@@ -42,6 +42,14 @@ public class RateLimitFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String getClientIp(HttpServletRequest request) {
+        String forwardedFor = request.getHeader("X-Forwarded-For");
+        if (forwardedFor != null && !forwardedFor.isBlank()) {
+            return forwardedFor.split(",")[0].trim();
+        }
+        return request.getRemoteAddr();
     }
 
     private Bucket createNewBucket() {
