@@ -42,6 +42,10 @@ public class AuthController {
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
 
+        if (authentication.getPrincipal() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         User user = (User) authentication.getPrincipal();
         String token = tokenConfig.generateToken(user);
         return ResponseEntity.ok(new LoginResponse(token));
@@ -53,9 +57,19 @@ public class AuthController {
         newUser.setPassword(passwordEncoder.encode(request.password()));
         newUser.setEmail(request.email());
         newUser.setName(request.name());
+        newUser.setRole("USER");
 
         userRepository.save(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterUserResponse(newUser.getName(), newUser.getEmail()));
+    }
+
+    @PostMapping("/guest")
+    public ResponseEntity<LoginResponse> loginAsGuest() {
+        User guest = userRepository.findUserByEmail("guest@sistema.com")
+                .orElseThrow(() -> new IllegalStateException("Usuário guest não encontrado"));
+
+        String token = tokenConfig.generateToken(guest);
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }
