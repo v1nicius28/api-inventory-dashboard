@@ -23,6 +23,10 @@ jobs:
 
       - name: Run tests
         run: mvn -B test
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SPRING_MONGODB_URI: ${{ secrets.SPRING_MONGODB_URI }}
+          ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}
 
   build-and-push:
     needs: test
