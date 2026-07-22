@@ -46,7 +46,7 @@ O deploy da aplicação é **100% automatizado** por meio de uma esteira de CI/C
 ### Arquitetura
 
 <p align="center">
-  <img src="./images/diagrama.png" alt="Diagrama" height="441" />
+  <img src="./images/diagrama.png" alt="Diagrama" height="500" />
 </p>
 
 ---
