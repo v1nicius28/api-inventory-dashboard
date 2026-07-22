@@ -22,7 +22,7 @@ O deploy da aplicação é **100% automatizado** por meio de uma esteira de CI/C
 
 | Componente      | Tecnologia                                    |
 |-----------------|-----------------------------------------------|
-| Servidor        | AWS EC2 (Ubuntu 24.04 LTS, t3.micro)          |
+| Servidor        | AWS EC2 (Ubuntu 26.04 LTS, t3.micro)          |
 | Automação CI/CD | GitHub Actions                                |
 | Image Registry  | GitHub Container Registry (GHCR)              |
 | Containerização | Docker                                        |
