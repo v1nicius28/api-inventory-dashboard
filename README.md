@@ -1,83 +1,90 @@
 # 📦 Inventory Dashboard — API
 
-API REST para gerenciamento de estoque, construída com Java, Spring Boot, Spring Security (JWT) e banco de dados MongoDB Atlas.
+![Deploy Status](https://github.com/v1nicius28/api-inventory-dashboard/actions/workflows/deploy.yml/badge.svg)
 
-🚀 Tecnologias Utilizadas
+API REST para gerenciamento de estoque, construída com Java, Spring Boot, Spring Security (JWT) e banco de dados MongoDB Atlas, implantada em infraestrutura própria na AWS.
 
-Java 
+## 🚀 Tecnologias Utilizadas
 
-Spring Boot 
+- Java 17
+- Spring Boot
+- Spring Web
+- Spring Security (JWT)
+- MongoDB Atlas
+- Spring Validation
+- JUnit + Mockito (testes)
+- Lombok
+- Docker
 
-Spring Web
+## ☁️ Infraestrutura e CI/CD (AWS & GitHub Actions)
 
-Spring Security (JWT)
+O deploy da aplicação é **100% automatizado** por meio de uma esteira de CI/CD via **GitHub Actions**. A cada `push` na branch `main`, a imagem Docker é compilada, publicada no **GitHub Container Registry (GHCR)** e implantada automaticamente na instância EC2.
 
-MongoDB Atlas
+| Componente      | Tecnologia                                    |
+|-----------------|-----------------------------------------------|
+| Servidor        | AWS EC2 (Ubuntu 24.04 LTS, t3.micro)          |
+| Automação CI/CD | GitHub Actions                                |
+| Image Registry  | GitHub Container Registry (GHCR)              |
+| Containerização | Docker                                        |
+| Proxy reverso   | Nginx                                         |
+| HTTPS/SSL       | Let's Encrypt (Certbot), renovação automática |
+| DNS             | DuckDNS                                       |
+| Banco de dados  | MongoDB Atlas                                 |
+| Firewall        | AWS Security Groups                           |
+| IP fixo         | AWS Elastic IP                                |
 
-Spring Validation
+**API em produção:** `https://inventory-dashboard.duckdns.org`
 
-JUnit + Mockito (testes)
+## 🔄 Fluxo de CI/CD (Como funciona o Deploy)
 
-Lombok
+1. **Trigger:** `git push` para a branch `main`.
+2. **Build & Push:** O GitHub Actions compila o projeto, gera o JAR, cria a imagem Docker e envia para o GHCR.
+3. **Deploy Automático:** O GitHub Actions se conecta via **SSH** na máquina EC2 da AWS, baixa a nova imagem (`docker pull`) e reinicia o container do backend sem intervenção manual.
 
-Docker
+---
 
-Render para hospedagem da API
+### Arquitetura
 
-🔗 Hospedagem
+<p align="center">
+  <img src="./images/diagrama.png" alt="Diagrama" height="441" />
+</p>
 
-Backend: hospedado no Render
+---
 
-MongoDB: MongoDB Atlas
-A API é consumida pelo frontend hospedado na Vercel → https://front-inventory-dashboard.vercel.app
+## ⚙️ Funcionalidades da API
 
-⚙️ Funcionalidades da API
-🔐 Autenticação
+### 🔐 Autenticação
+- Login com JWT
+- Cadastro de usuário
+- Acesso como convidado (guest)
+- Filtro de autenticação personalizado
+- Rate limiting nas rotas de autenticação (proteção contra força bruta)
+- Rotas públicas: `/auth/login`, `/auth/register`, `/auth/guest`
 
-Login com JWT
+### 📦 Produtos
+- Criar produto
+- Listar todos
+- Atualizar
+- Excluir
 
-Filtro de autenticação personalizado
+### ✔️ Validações aplicadas
+- Campos obrigatórios
+- Validação de preço e quantidade
+- DTOs separados para requests/responses
 
-Rotas públicas:
+### 🔒 Segurança
+- CORS configurado por variável de ambiente (múltiplas origens suportadas)
+- Comunicação 100% via HTTPS
+- SSH restrito por IP na infraestrutura
+- Segredos gerenciados via variáveis de ambiente (nunca commitados)
 
-/auth/login
-
-/auth/register
-
-📦 Produtos
-
-Criar produto
-
-Listar todos
-
-Atualizar
-
-Excluir
-
-✔️ Validações aplicadas
-
-Campos obrigatórios
-
-Validação de preço e quantidade
-
-DTOs separados para requests/responses
-
-🧪 Testes
-
+### 🧪 Testes
 O projeto contém testes automatizados:
+- Controller tests
+- Integration tests
+- Service tests
+- Validation tests
 
-Controller tests
+## 🔗 Projeto relacionado
 
-Integration tests
-
-Service tests
-
-Validation tests
-
-📦 Build / Deploy
-
-O projeto contém:
-
-Dockerfile
-
-Configuração compatível com Render Deploy
+Frontend: *([ Link do repositório do frontend ](https://github.com/v1nicius28/front-inventory-dashboard))*
