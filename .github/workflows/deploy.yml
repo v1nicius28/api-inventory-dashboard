@@ -63,6 +63,9 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
+    environment:
+      name: Production (AWS EC2)
+      url: https://inventory-dashboard.duckdns.org
     permissions:
       packages: read
     steps:
